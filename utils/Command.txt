@@ -1,0 +1,1 @@
+"C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.exe" -C "C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.conf" -p m328p -c arduino -P COM5 -b 57600 -U flash:w:$(ImagePath) -D -V
