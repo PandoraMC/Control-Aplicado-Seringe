@@ -15,11 +15,12 @@
 int main(void) {
     DDRD = 0x02;
     cli();
-    InitSerial(USART0_BASE, 38400);
-    USART0_BASE->UCSRnB.RXCIEn = 1;
+    float e = InitSerial(USART0_BASE, 28800);
+    SerialInterrupt(USART0_BASE, 1, 0);
+    sendChar(USART0_BASE, (uint8_t)e);
     sei();
     while(1){
-        sendString(USART0_BASE, (uint8_t *)"add 1,0,12\xFF\xFF\xFF");
+        //sendString(USART0_BASE, (uint8_t *)"add 1,0,12\xFF\xFF\xFF");
     }
 }
 

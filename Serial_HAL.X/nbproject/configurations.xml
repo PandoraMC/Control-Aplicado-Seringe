@@ -60,7 +60,7 @@
         <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>"C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.exe" -C "C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.conf" -p m328p -c arduino -P COM4 -b 57600 -U flash:w:$(ImagePath) -D -V</makeCustomizationPostStep>
+        <makeCustomizationPostStep>"C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.exe" -C "C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.conf" -p m328p -c arduino -P COM9 -b 57600 -U flash:w:$(ImagePath) -D -V</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>

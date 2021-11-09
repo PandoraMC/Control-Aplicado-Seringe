@@ -90,7 +90,7 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=ATmega328P
-ProjectDir="D:\Documents\Courses\Ser Inge\Embebidos\Control-Aplicado-Seringe\Serial_HAL.X"
+ProjectDir="E:\Documentos\Courses\Control-Aplicado-Seringe\Serial_HAL.X"
 ProjectName=Serial_HAL
 ConfName=default
 ImagePath="dist\default\${IMAGE_TYPE}\Serial_HAL.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}"
@@ -108,8 +108,8 @@ ifneq ($(INFORMATION_MESSAGE), )
 endif
 	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Serial_HAL.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 	@echo "--------------------------------------"
-	@echo "User defined post-build step: ["C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.exe" -C "C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.conf" -p m328p -c arduino -P COM4 -b 57600 -U flash:w:$(ImagePath) -D -V]"
-	@"C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.exe" -C "C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.conf" -p m328p -c arduino -P COM4 -b 57600 -U flash:w:$(ImagePath) -D -V
+	@echo "User defined post-build step: ["C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.exe" -C "C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.conf" -p m328p -c arduino -P COM9 -b 57600 -U flash:w:$(ImagePath) -D -V]"
+	@"C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.exe" -C "C:\Program Files\Microchip\MPLABX\v5.45\mplab_platform\bin\avrdude.conf" -p m328p -c arduino -P COM9 -b 57600 -U flash:w:$(ImagePath) -D -V
 	@echo "--------------------------------------"
 
 MP_PROCESSOR_OPTION=ATmega328P
@@ -128,26 +128,26 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/main.o: main.c  .generated_files/46f21593a2294d0099b88d8f1e1eb8fe2b00a444.flag .generated_files/6a919784f3eb6c2d300f40ba34f5a9cdb50801f5.flag
+${OBJECTDIR}/main.o: main.c  .generated_files/b4952f35da5cf70ec57ab9b049311d2f63175050.flag .generated_files/3c6ce705964a09bc088970466ec0715524ad6b4a.flag
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
 	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/main.o.d" -MT "${OBJECTDIR}/main.o.d" -MT ${OBJECTDIR}/main.o  -o ${OBJECTDIR}/main.o main.c  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -DF_CPU=16000000
 	
-${OBJECTDIR}/Serial_HAL.o: Serial_HAL.c  .generated_files/9e03455dbe6142cdc7fe81cc0241628f3ee48c04.flag .generated_files/6a919784f3eb6c2d300f40ba34f5a9cdb50801f5.flag
+${OBJECTDIR}/Serial_HAL.o: Serial_HAL.c  .generated_files/c6ce36badc753469eb39c05b7be7c59084164a34.flag .generated_files/3c6ce705964a09bc088970466ec0715524ad6b4a.flag
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/Serial_HAL.o.d 
 	@${RM} ${OBJECTDIR}/Serial_HAL.o 
 	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS} -g -DDEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1 -gdwarf-2  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/Serial_HAL.o.d" -MT "${OBJECTDIR}/Serial_HAL.o.d" -MT ${OBJECTDIR}/Serial_HAL.o  -o ${OBJECTDIR}/Serial_HAL.o Serial_HAL.c  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -DF_CPU=16000000
 	
 else
-${OBJECTDIR}/main.o: main.c  .generated_files/59f813a8e5af38376ee45701d88adf4ca80a00fd.flag .generated_files/6a919784f3eb6c2d300f40ba34f5a9cdb50801f5.flag
+${OBJECTDIR}/main.o: main.c  .generated_files/c0762dc367c261fb7c0b672f9aebc9b533ee0b99.flag .generated_files/3c6ce705964a09bc088970466ec0715524ad6b4a.flag
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
 	 ${MP_CC}  $(MP_EXTRA_CC_PRE) -mmcu=atmega328p ${PACK_COMPILER_OPTIONS} ${PACK_COMMON_OPTIONS}  -x c -c -D__$(MP_PROCESSOR_OPTION)__  -funsigned-char -funsigned-bitfields -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -MD -MP -MF "${OBJECTDIR}/main.o.d" -MT "${OBJECTDIR}/main.o.d" -MT ${OBJECTDIR}/main.o  -o ${OBJECTDIR}/main.o main.c  -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -DF_CPU=16000000
 	
-${OBJECTDIR}/Serial_HAL.o: Serial_HAL.c  .generated_files/65f89e24e95c0268eb531d06db733e823cad812.flag .generated_files/6a919784f3eb6c2d300f40ba34f5a9cdb50801f5.flag
+${OBJECTDIR}/Serial_HAL.o: Serial_HAL.c  .generated_files/23ef51297f7d7b5051a6c2273d6ca022901c5e59.flag .generated_files/3c6ce705964a09bc088970466ec0715524ad6b4a.flag
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/Serial_HAL.o.d 
 	@${RM} ${OBJECTDIR}/Serial_HAL.o 

@@ -14,19 +14,27 @@
 #warning "Define a F_CPU. default 16MHz"
 #endif
 
-int8_t InitSerial(USARTn_t *usart, uint32_t baud){
+float InitSerial(USARTn_t *usart, uint32_t baud){
+    float volatile fUBRRn = (float)F_CPU/16.0/(float)baud - 1;
+    float volatile fBaud;
     usart->UCSRnB.RXENn = 1;
     usart->UCSRnB.TXENn = 1;
-    usart->UCSRnC.UMSELn = 0b00;
-    usart->UCSRnC.UPMn = 0b00;
+    usart->UCSRnC.UMSELn = ASYNC_MODE;
+    usart->UCSRnC.UPMn = P_NONE;
     usart->UCSRnC.UCSZn = 0b11;
-    usart->UBRRn = (uint16_t)round((float)F_CPU/16.0/(float)baud - 1);
-    return 0;
+    usart->UBRRn = (uint16_t)round(fUBRRn);
+    fBaud = (float)F_CPU/16.0/(float)(usart->UBRRn + 1);
+    return fBaud/baud - 1;
+}
+
+void SerialInterrupt(USARTn_t *usart, uint8_t TxActive, uint8_t RxActive){
+    usart->UCSRnB.RXCIEn = RxActive;
+    usart->UCSRnB.TXCIEn = TxActive;
 }
 
 uint8_t sendChar(USARTn_t *usart, uint8_t chr){
     uint8_t sendReady = usart->UCSRnA.UDREn;
-    if(1 == sendReady){
+    if(1U == sendReady){
         usart->UDRn = chr;
     }
     return sendReady;
@@ -34,7 +42,7 @@ uint8_t sendChar(USARTn_t *usart, uint8_t chr){
 
 uint8_t getChar(USARTn_t *usart, uint8_t *chr){
     uint8_t receiveReady = usart->UCSRnA.RXCn;
-    if(1 == receiveReady){
+    if(1U == receiveReady){
         *chr = usart->UDRn;
     }
     return receiveReady;
@@ -48,24 +56,3 @@ void sendString(USARTn_t *usart, uint8_t *str){
         }
     }
 }
-
-
-
-/*
-void USART_Transmit(uint8_t data){
-    while (!(UCSR0A & (1<<UDRE0))){}
-    UDR0 = data;
-}
-
-uint8_t USART_Receive(void){
-    while (!(UCSR0A & (1<<RXC0))){}
-    return UDR0;
-}
-
-void USART_SendString(char *str){
-    char *chrIndex = str;
-    while(*(chrIndex) != '\0'){
-        USART_Transmit(*chrIndex);
-        chrIndex++;
-    }
-}*/
