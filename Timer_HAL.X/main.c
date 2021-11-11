@@ -3,13 +3,14 @@
 #include "Timer_HAL.h"
 
 int main(void) {
-    volatile TIMER0_t *miTemporizador = TIMER0_BASE;
-    //miTemporizador->TCCRA.COM0A = CLEAR_OUT;
-    InitTimer(miTemporizador, CLEAR_OUT);
-    miTemporizador->TCCRA.COM0B = TOGGLE_OUT;
-    miTemporizador->TCCRB.CS = FT;
-    miTemporizador->OCRA = 0x5A;
-    miTemporizador->OCRB = 0xA5;
+    TIMER_t *miTemporizador = TIMER0_BASE;
+    InitTimer(miTemporizador, NORMAL_MODE);
+    TimerClockSource(miTemporizador, RiseT0);
+    
+    InitTimer(TIMER2_BASE, PWM_TOP_MODE);
+    TimerOutMode(TIMER2_BASE, 'A', SET_OUT);
+    TimerClockSource(TIMER2_BASE, N12);
+    
     while(1){
         
     }

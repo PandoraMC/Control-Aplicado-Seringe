@@ -14,23 +14,34 @@ extern "C" {
 
 #include<stdint.h>
     
-#define TIMER0_BASE ((TIMER0_t *)0x44)
+#define TIMER0_BASE ((TIMER_t *)0x44)
+#define TIMER2_BASE ((TIMER_t *)0xB0)
     
-#define TOGGLE_OUT 0b01
-#define CLEAR_OUT  0b10
+#define DISCONNECT_OUT  0b00
+#define TOGGLE_OUT      0b01
+#define CLEAR_OUT       0b10
+#define SET_OUT         0b11
     
-enum{NC = 0b000, N1, N8, N64, N256, N1024, FT, RT};
+#define NORMAL_MODE   0b000
+#define PWM_TOP_MODE  0b001
+#define CTC_MODE      0b010
+#define FPWM_TOP_MODE 0b011
+#define PWM_OCR_MODE  0b101
+#define FPWM_OCR      0b111
+    
+typedef enum{NC0 = 0b000, N10, N80, N640, N2560, N10240, FallT0, RiseT0}ClkTmr0_t;
+typedef enum{NC2 = 0b000, N12, N82, N322, N642, N1282, N2562, N10242}ClkTmr2_t;
 
 typedef struct{
-    uint8_t WGM0    : 2;//Estructuras a nivel de bit
+    uint8_t WGM     : 2;//Estructuras a nivel de bit
     uint8_t         : 2;//Permiten enmascaras de forma abstracta
-    uint8_t COM0B   : 2;
-    uint8_t COM0A   : 2;
+    uint8_t COMB    : 2;
+    uint8_t COMA    : 2;
 }TCCR0A_t;
 
 typedef struct{
     uint8_t CS      : 3;
-    uint8_t WGM0    : 1;
+    uint8_t WGM     : 1;
     uint8_t         : 2;
     uint8_t FOCB    : 1;
     uint8_t FOCA    : 1;
@@ -42,9 +53,11 @@ typedef struct{
     uint8_t  TNCT;
     uint8_t  OCRA;
     uint8_t  OCRB;
-}TIMER0_t;
+}TIMER_t;
 
-void InitTimer(TIMER0_t *timer, uint8_t outMode);
+void InitTimer(TIMER_t *timer, uint8_t TmrMode);
+void TimerOutMode(TIMER_t *timer, uint8_t outSel,uint8_t outMode);
+void TimerClockSource(TIMER_t *timer, uint8_t CS);
 
 #ifdef	__cplusplus
 }
