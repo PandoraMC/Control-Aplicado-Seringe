@@ -29,8 +29,8 @@ extern "C" {
 #define PWM_OCR_MODE  0b101
 #define FPWM_OCR      0b111
     
-typedef enum{NC0 = 0b000, N10, N80, N640, N2560, N10240, FallT0, RiseT0}ClkTmr0_t;
-typedef enum{NC2 = 0b000, N12, N82, N322, N642, N1282, N2562, N10242}ClkTmr2_t;
+typedef enum{NC_0 = 0b000, N1_0, N8_0, N64_0, N256_0, N1024_0, FallT0, RiseT0}ClkTmr0_t;
+typedef enum{NC_2 = 0b000, N1_2, N8_2, N32_2, N64_2, N128_2, N256_2, N1024_2}ClkTmr2_t;
 
 typedef struct{
     uint8_t WGM     : 2;//Estructuras a nivel de bit
