@@ -1,0 +1,32 @@
+[System]
+Name='speed'
+Type='mamdani'
+Version=2.0
+NumInputs=1
+NumOutputs=1
+NumRules=3
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Error'
+Range=[-255 255]
+NumMFs=3
+MF1='NB':'trapmf',[-714 -306 -100 -0]
+MF2='PB':'trapmf',[0 100 306 714]
+MF3='C':'trimf',[-50 0 50]
+
+[Output1]
+Name='PWM'
+Range=[0 255]
+NumMFs=2
+MF1='F':'trapmf',[0 127 294 330]
+MF2='L':'trimf',[0 0 50]
+
+[Rules]
+3, 2 (1) : 1
+2, 1 (1) : 1
+1, 2 (1) : 1
