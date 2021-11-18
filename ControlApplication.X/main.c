@@ -23,18 +23,25 @@ volatile uint8_t *rt = 0;
 // Protocolo de comunicación
 volatile uint8_t Stream[4];
 
-volatile float et = 0;
-volatile float ut = 0;
+//Van codificadas las ganancias [Kp, Ki, Kd](PID)
+volatile float K[3] = {2.86, 9.43, 0.0};
+volatile float q[3];
+volatile float et[3] = {0, 0, 0};
+volatile float ut[2] = {0, 0};
+volatile float Ts = 100e-3;
 
 void InitPeripheral(void);
 void SendStream(USARTn_t *usart, volatile uint8_t *str, uint8_t N);
 
 int main(void) {
-    InitPeripheral();
+    q[0] = (K[0] + K[1]*Ts + K[2]/Ts);
+    q[1] = (-K[0] - 2*K[2]/Ts);
+    q[2] = (K[2]/Ts);
     Stream[0] = 0x03;
     Stream[3] = 0xFC;
     rt = &Stream[1];
     PPS = &Stream[2];
+    InitPeripheral();
     while(1){
     }
 }
@@ -62,16 +69,21 @@ ISR(TIMER1_COMPA_vect){
     // La promoción consiste en llevar a las variables involucradas
     // al tamaño de memoria mayor.
     // Promoción de variable [explicito] typecasting
-    et = (float)(*rt) - *PPS;
+    et[0] = (float)(*rt) - *PPS;
     /*
     if(et > 0){
         ut = 255;
     }else{
         ut = 0;
     }*/
-    ut = 5.375*et;
+    //ut[0] = 5.375*et[0];
+    ut[0] = ut[1] + q[0]*et[0] + q[1]*et[1] + q[2]*et[2];
     
-    TIMER2_BASE->OCRA = (ut > 255)? 255: (ut < 0)? 0: (uint8_t)ut;
+    TIMER2_BASE->OCRA = (ut[0] > 255)? 255: (ut[0] < 0)? 0: (uint8_t)ut[0];
+    // Corrimientos de datos en el tiempo
+    et[2] = et[1];
+    et[1] = et[0];
+    ut[1] = ut[0];
     PORTB &= 0xFE;
 }
 
@@ -98,7 +110,7 @@ void InitPeripheral(void){
     TIMSK1 = 0x02;//COMA
     
     //Hardware Abstraction Layer (HAL)
-    InitSerial(USART0_BASE, 9600);
+    InitSerial(USART0_BASE, 38400);
     SerialInterrupt(USART0_BASE, 0, 1);
     
     InitTimer(TIMER0_BASE, NORMAL_MODE);
