@@ -65,8 +65,18 @@ int main(void) {
     }
 }
 
+uint8_t state = 0;
+
 ISR(USART_RX_vect){
-    getChar(USART0_BASE, (uint8_t*)rt);
+    static uint8_t RxData;
+    getChar(USART0_BASE, &RxData);
+    if(state == 0 && RxData == 0x71){
+        state = 1;
+        // Asignar instrucciones
+    }else if(state == 1){
+        *rt = RxData;
+        state = 0;
+    }
     //TIMER2_BASE->OCRA = *rt;
 #ifndef TIMER_MODE
     SendStream(USART0_BASE, (uint8_t*)Stream, 4);
@@ -96,10 +106,10 @@ ISR(TIMER1_COMPA_vect){
         ut = 0;
     }*/
     //ut[0] = 5.375*et[0];
-    //ut[0] = ut[1] + q[0]*et[0] + q[1]*et[1] + q[2]*et[2];
+    ut[0] = ut[1] + q[0]*et[0] + q[1]*et[1] + q[2]*et[2];
     // Control basado en consulta
     //ut[0] = Fuzzy2[(uint16_t)(et[0] + 255.0)];
-    ut[0] = Fuzzy0[(uint16_t)(*rt/255*14)][(uint16_t)(et[0]/255*7+7)];
+    //ut[0] = Fuzzy0[(uint16_t)(*rt/255*14)][(uint16_t)(et[0]/255*7+7)];
     TIMER2_BASE->OCRA = (ut[0] > 255)? 255: (ut[0] < 0)? 0: (uint8_t)ut[0];
     // Corrimientos de datos en el tiempo
     et[2] = et[1];
